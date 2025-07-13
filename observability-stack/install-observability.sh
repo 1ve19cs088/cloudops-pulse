@@ -22,16 +22,17 @@ helm install grafana grafana/grafana \
   --set service.type=NodePort \
   --set persistence.enabled=false
 
-echo "📄 Installing Loki + Promtail..."
-helm install loki grafana/loki-stack \
-  -n observability \
-  --set promtail.enabled=true \
-  --set grafana.enabled=false
+#For further usage
+# echo "📄 Installing Loki + Promtail..."
+# helm install loki grafana/loki-stack \
+#   -n observability \
+#   --set promtail.enabled=true \
+#   --set grafana.enabled=false
 
-echo "🔍 Installing Tempo..."
-helm install tempo grafana/tempo \
-  -n observability \
-  --set traces.otlp.grpc.enabled=true \
-  --set traces.otlp.http.enabled=true
+# echo "🔍 Installing Tempo..."
+# helm install tempo grafana/tempo \
+#   -n observability \
+#   --set traces.otlp.grpc.enabled=true \
+#   --set traces.otlp.http.enabled=true
 
 echo "✅ Observability stack deployed!"
