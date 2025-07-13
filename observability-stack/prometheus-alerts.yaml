@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: example-alert-rules
+  namespace: observability
+  labels:
+    release: prometheus
+spec:
+  groups:
+    - name: pod-cpu-alerts
+      rules:
+        - alert: HighCPULoad
+          expr: rate(container_cpu_usage_seconds_total{namespace="sre-app"}[2m]) > 0.1
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High CPU usage detected"
+            description: "Pod CPU usage is above threshold ({{ $value }})."

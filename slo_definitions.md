@@ -1,0 +1,3 @@
+- SLI: container_cpu_usage_seconds_total
+- SLO: < 0.1 (10%) CPU for 95% of time
+- Alert: Fires if CPU > 0.1 for > 1 min

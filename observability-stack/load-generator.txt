@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: load-generator
+  namespace: sre-app
+spec:
+  containers:
+    - name: cpu-burner
+      image: python:3.9-slim
+      command: ["python3", "-c"]
+      args:
+        - |
+          import time, random
+          print("Simulating high CPU load...")
+          while True:
+              [random.random() * random.random() for _ in range(1000000)]
+              time.sleep(1)

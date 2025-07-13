@@ -1,0 +1,47 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: sre-gateway
+  namespace: sre-app
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: sre-routing
+  namespace: sre-app
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - sre-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /frontend
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: frontend.sre-app.svc.cluster.local
+            port:
+              number: 80
+    - match:
+        - uri:
+            prefix: /backend
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: backend.sre-app.svc.cluster.local
+            port:
+              number: 80
